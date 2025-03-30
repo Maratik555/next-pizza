@@ -1,28 +1,31 @@
 'use client';
 import React from 'react';
-import { useIntersection } from 'react-use';
+import {useIntersection} from 'react-use';
 
-import { Title } from './title';
-import { cn } from "@/lib/utils"
-import { ProductCard } from './product-card';
-import { useCategoryStore } from '../../../store/category';
-// import { ProductWithRelations } from '@/@types/prisma';
+import {Title} from './title';
+import {cn} from "@/lib/utils"
+import {ProductCard} from './product-card';
+import {useCategoryStore} from '../../../store/category';
+import {CategoryProducts} from '../../../@types/prisma';
+
 
 interface Props {
     title: string;
-    items: any[];
+    // items: any[];
     categoryId?: number;
     className?: string;
     listClassName?: string;
+    products: CategoryProducts['products'];
 }
 
 export const ProductsGroupList = ({
-                                                       title,
-                                                       items,
-                                                       listClassName,
-                                                       categoryId,
-                                                       className,
-                                                   }: Props) => {
+                                      title,
+                                      // items,
+                                      listClassName,
+                                      categoryId,
+                                      className,
+                                      products
+                                  }: Props) => {
 
     const setActiveCategoryId = useCategoryStore((state) => state.setActiveId);
 
@@ -41,10 +44,10 @@ export const ProductsGroupList = ({
 
     return (
         <div className={className} id={title} ref={intersectionRef}>
-            <Title text={title} size="lg" className="font-extrabold mb-5" />
+            <Title text={title} size="lg" className="font-extrabold mb-5"/>
 
             <div className={cn('grid grid-cols-3 gap-[50px]', listClassName)}>
-                {items.map((product) => (
+                {products.filter((product) => product.items.length > 0).map((product) => (
                     <ProductCard
                         key={product.id}
                         id={product.id}
