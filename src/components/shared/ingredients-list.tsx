@@ -1,4 +1,3 @@
-import React from 'react';
 import { cn } from '@/lib/utils';
 import { Ingredient as IIngredient } from '@prisma/client';
 import { Ingredient } from './ingredient';
@@ -10,12 +9,12 @@ interface Props {
     className?: string;
 }
 
-export const IngredientsList: React.FC<Props> = ({
+export const IngredientsList = ({
                                                      ingredients,
                                                      selectedIds,
                                                      onClickAdd,
                                                      className,
-                                                 }) => {
+                                                 }: Props) => {
     return (
         <div className={cn('grid grid-cols-3 gap-3', className)}>
             {ingredients.map((item) => (

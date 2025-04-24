@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
                                        children,
-                                       // modal,
+                                       modal,
                                    }: Readonly<{
     children: React.ReactNode;
     modal: React.ReactNode;
@@ -17,7 +17,7 @@ export default function RootLayout({
         <main className="min-h-screen bg-white">
             <Header hasSearch />
             {children}
-            {/*{modal}*/}
+            {modal}
         </main>
     );
 }

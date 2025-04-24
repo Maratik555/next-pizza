@@ -1,6 +1,5 @@
 import { cn } from '@/lib/utils';
 import { CircleCheck } from 'lucide-react';
-import React from 'react';
 
 interface Props {
     className?: string;
@@ -11,14 +10,14 @@ interface Props {
     onClick?: () => void;
 }
 
-export const Ingredient: React.FC<Props> = ({
+export const Ingredient = ({
                                                 className,
                                                 active,
                                                 price,
                                                 name,
                                                 imageUrl,
-                                                onClick,
-                                            }) => {
+                                                onClick
+                                            }: Props) => {
     return (
         <div
             onClick={onClick}

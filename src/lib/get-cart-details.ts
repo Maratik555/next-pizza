@@ -1,41 +1,31 @@
-import { CartDTO } from '../../services/dto/cart.dto';
-import { calcCartItemTotalPrice } from './calc-cart-item-total-price';
+import { CartItemDTO, CartResponse } from '../../services/dto/cart.dto';
+import { calcCartItemTotalAmount } from './calc-cart-item-total-amount';
+import { ICartItem } from '../../store/cart';
+import { Ingredient } from '@prisma/client';
 
-export type CartStateItem = {
-    id: number;
-    quantity: number;
-    name: string;
-    imageUrl: string;
-    price: number;
-    disabled?: boolean;
-    pizzaSize?: number | null;
-    pizzaType?: number | null;
-    ingredients: Array<{ name: string; price: number }>;
+type ReturnProps = {
+	items: ICartItem[];
+	totalAmount: number;
 };
 
-interface ReturnProps {
-    items: CartStateItem[];
-    totalAmount: number;
-}
+export const getCartDetails = (data: CartResponse): ReturnProps => {
+	const items = data.items.map((item: CartItemDTO) => ({
+		id: item.id,
+		quantity: item.quantity,
+		name: item.productItem.product.name,
+		imageUrl: item.productItem.product.imageUrl,
+		price: calcCartItemTotalAmount(item),
+		pizzaSize: item.pizzaSize,
+		type: item.type,
+		productItem: {
+			size: item.productItem.size,
+			pizzaType: item.productItem.pizzaType,
+		},
+		ingredients: item.ingredients.map((ingredient: Ingredient) => ({
+			name: ingredient.name,
+			price: ingredient.price,
+		})),
+	}));
 
-export const getCartDetails = (data: CartDTO): ReturnProps => {
-    const items = data.items.map((item: any) => ({
-        id: item.id,
-        quantity: item.quantity,
-        name: item.productItem.product.name,
-        imageUrl: item.productItem.product.imageUrl,
-        price: calcCartItemTotalPrice(item),
-        pizzaSize: item.productItem.size,
-        pizzaType: item.productItem.pizzaType,
-        disabled: false,
-        ingredients: item.ingredients.map((ingredient: any) => ({
-            name: ingredient.name,
-            price: ingredient.price,
-        })),
-    })) as CartStateItem[];
-
-    return {
-        items,
-        totalAmount: data.totalAmount,
-    };
+	return { items, totalAmount: data.totalAmount || 0 };
 };

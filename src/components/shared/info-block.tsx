@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from '../ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -12,7 +11,7 @@ interface Props {
     imageUrl?: string;
 }
 
-export const InfoBlock: React.FC<Props> = ({ className, title, text, imageUrl }) => {
+export const InfoBlock = ({ className, title, text, imageUrl }: Props) => {
     return (
         <div className={cn(className, 'flex items-center justify-between w-[840px] gap-12')}>
             <div className="flex flex-col">

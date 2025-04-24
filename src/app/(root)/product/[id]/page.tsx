@@ -4,6 +4,7 @@ import { ProductsGroupList } from '@/components/shared/products-group-list';
 import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import { Product, ProductItem, Ingredient, Category } from '@prisma/client';
+import React from 'react';
 
 type ProductWithRelations = Product & {
 	ingredients: Ingredient[];
@@ -15,16 +16,24 @@ type ProductWithRelations = Product & {
 	};
 };
 
-export default async function ProductPage({ params: { id } }: { params: { id: string } }) {
+export default async function ProductPage({ params }: { params: { id: string } }) {
+	const productId = Number(params.id);
+
 	const product = (await prisma.product.findFirst({
 		where: {
-			id: Number(id),
+			id: productId,
 		},
 		include: {
 			ingredients: true,
 			category: {
 				include: {
 					products: {
+						where: {
+							// Исключаем текущий продукт сразу в запросе
+							id: {
+								not: productId,
+							},
+						},
 						include: {
 							items: true,
 						},
@@ -50,6 +59,9 @@ export default async function ProductPage({ params: { id } }: { params: { id: st
 		return notFound();
 	}
 
+	// Получаем только продукты с доступными вариантами
+	const recommendedProducts = product.category.products.filter(p => p.items.length > 0);
+
 	return (
 		<Container className='flex flex-col my-10'>
 			<ChoosePizzaForm
@@ -59,14 +71,15 @@ export default async function ProductPage({ params: { id } }: { params: { id: st
 				ingredients={product.ingredients}
 			/>
 
-			<ProductsGroupList
-				className='mt-20'
-				listClassName='grid-cols-4'
-				key={product.category.id}
-				title='Рекомендации'
-				products={product.category.products}
-				categoryId={product.category.id}
-			/>
+			{recommendedProducts.length > 0 && (
+				<ProductsGroupList
+					className='mt-20'
+					listClassName='grid-cols-4'
+					title='Рекомендации'
+					products={recommendedProducts}
+					categoryId={product.category.id}
+				/>
+			)}
 		</Container>
 	);
 }

@@ -1,9 +1,5 @@
 'use client';
 
-import React from 'react';
-
-import { useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
 import { Button } from '../ui/button';
 import { ChevronLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -14,7 +10,7 @@ interface Props {
     pageCount?: number;
 }
 
-export const Pagination: React.FC<Props> = ({ className, currentPage = 1, pageCount = 1 }) => {
+export const Pagination = ({ className, currentPage = 1, pageCount = 1}: Props) => {
     return (
         <div className={cn('flex items-center gap-1', className)}>
             <Button

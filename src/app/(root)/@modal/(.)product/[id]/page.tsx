@@ -2,31 +2,34 @@ import { ChooseProductModal } from '@/components/shared/modals/choose-product-mo
 import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 
-export default async function PhotoModal({ params: { id } }: { params: { id: string } }) {
-    const product = await prisma.product.findFirst({
-        where: {
-            id: Number(id),
-        },
-        include: {
-            ingredients: true,
-            items: {
-                orderBy: {
-                    id: 'desc',
-                },
-                include: {
-                    product: {
-                        include: {
-                            items: true,
-                        },
-                    },
-                },
-            },
-        },
-    });
+export default async function PhotoModal({ params }: { params: { id: string } }) {
+	const awaitedParams = await params;
+	const id = awaitedParams.id;
 
-    if (!product) {
-        return notFound();
-    }
+	const product = await prisma.product.findFirst({
+		where: {
+			id: Number(id),
+		},
+		include: {
+			ingredients: true,
+			items: {
+				// orderBy: {
+				//     id: 'desc',
+				// },
+				include: {
+					product: {
+						include: {
+							items: true,
+						},
+					},
+				},
+			},
+		},
+	});
 
-    return <ChooseProductModal product={product} />;
+	if (!product) {
+		return notFound();
+	}
+
+	return <ChooseProductModal product={product} />;
 }

@@ -31,6 +31,6 @@ export const Title = ({ text, size = 'sm', className } : Props) => {
   return React.createElement(
     mapTagBySize[size],
     { className: clsx(mapClassNameBySize[size], className) },
-    text,
+    text
   );
 };

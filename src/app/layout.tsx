@@ -1,6 +1,6 @@
 import React from 'react';
 import './globals.css';
-// import { Providers } from './providers';
+import { Providers } from './providers';
 import { Nunito } from 'next/font/google';
 
 const nunito = Nunito({
@@ -20,8 +20,7 @@ export default function RootLayout({
             <link data-rh="true" rel="icon" href="/logo.png" />
         </head>
         <body>
-        {/*<Providers>{children}</Providers>*/}
-        {children}
+        <Providers>{children}</Providers>
         </body>
         </html>
     );

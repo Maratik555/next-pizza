@@ -4,40 +4,42 @@ import { GroupVariants } from './group-variants';
 import { PizzaSizeItem, pizzaTypes } from '@/lib/pizza-details-to-text';
 
 interface Props {
-    pizzaSizes: PizzaSizeItem[];
+	pizzaSizes: PizzaSizeItem[];
 
-    selectedSize?: string;
-    onClickSize: (value: string) => void;
+	selectedSize?: string;
+	onClickSize: (value: string) => void;
 
-    selectedPizzaType?: string;
-    onClickPizzaType: (value: string) => void;
+	selectedPizzaType?: string;
+	onClickPizzaType: (value: string) => void;
 
-    className?: string;
+	className?: string;
 }
 
-export const PizzaSelector: React.FC<Props> = ({
-                                                   pizzaSizes,
-                                                   selectedSize = '20',
-                                                   selectedPizzaType = '1',
-                                                   onClickSize,
-                                                   onClickPizzaType,
-                                                   className,
-                                               }) => {
-    return (
-        <div className={cn('flex flex-col gap-3 mt-5 mb-8', className)}>
-            <GroupVariants
-                defaultValue="20"
-                items={pizzaSizes}
-                onClick={onClickSize}
-                selectedValue={selectedSize}
-            />
+export const PizzaSelector = React.memo(
+	({
+		pizzaSizes,
+		selectedSize = '20',
+		selectedPizzaType = '1',
+		onClickSize,
+		onClickPizzaType,
+		className,
+	}: Props) => {
+		return (
+			<div className={cn('flex flex-col gap-3 mt-5 mb-8', className)}>
+				<GroupVariants
+					defaultValue='20'
+					items={pizzaSizes}
+					onClick={onClickSize}
+					selectedValue={selectedSize}
+				/>
 
-            <GroupVariants
-                defaultValue="1"
-                items={pizzaTypes}
-                onClick={onClickPizzaType}
-                selectedValue={selectedPizzaType}
-            />
-        </div>
-    );
-};
+				<GroupVariants
+					defaultValue='1'
+					items={pizzaTypes}
+					onClick={onClickPizzaType}
+					selectedValue={selectedPizzaType}
+				/>
+			</div>
+		);
+	},
+);
