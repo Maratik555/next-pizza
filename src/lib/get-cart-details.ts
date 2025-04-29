@@ -9,7 +9,7 @@ type ReturnProps = {
 };
 
 export const getCartDetails = (data: CartResponse): ReturnProps => {
-	const items = data.items.map((item: CartItemDTO) => ({
+	const items = (data.items || []).map((item: CartItemDTO) => ({
 		id: item.id,
 		quantity: item.quantity,
 		name: item.productItem.product.name,
@@ -21,7 +21,7 @@ export const getCartDetails = (data: CartResponse): ReturnProps => {
 			size: item.productItem.size,
 			pizzaType: item.productItem.pizzaType,
 		},
-		ingredients: item.ingredients.map((ingredient: Ingredient) => ({
+		ingredients: (item.ingredients || []).map((ingredient: Ingredient) => ({
 			name: ingredient.name,
 			price: ingredient.price,
 		})),

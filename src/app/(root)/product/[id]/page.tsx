@@ -1,4 +1,5 @@
 import { ChoosePizzaForm } from '@/components/shared/choose-pizza-form';
+import { ChooseProductForm } from '@/components/shared/choose-product-form';
 import { Container } from '@/components/shared/container';
 import { ProductsGroupList } from '@/components/shared/products-group-list';
 import { prisma } from '@/lib/prisma';
@@ -12,6 +13,7 @@ type ProductWithRelations = Product & {
 	category: Category & {
 		products: (Product & {
 			items: ProductItem[];
+			ingredients: Ingredient[];
 		})[];
 	};
 };
@@ -36,6 +38,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
 						},
 						include: {
 							items: true,
+							ingredients: true,
 						},
 					},
 				},
@@ -62,21 +65,29 @@ export default async function ProductPage({ params }: { params: { id: string } }
 	// Получаем только продукты с доступными вариантами
 	const recommendedProducts = product.category.products.filter(p => p.items.length > 0);
 
+	const firstItem = product.items[0]
+	const isPizzaForm = Boolean(firstItem.pizzaType);
+
 	return (
 		<Container className='flex flex-col my-10'>
-			<ChoosePizzaForm
+			{isPizzaForm && <ChoosePizzaForm
 				imageUrl={product.imageUrl}
 				name={product.name}
 				items={product.items}
 				ingredients={product.ingredients}
 			/>
-
+			}
+			<ChooseProductForm
+				imageUrl={product.imageUrl}
+				name={product.name}
+				items={product.items}
+			/>
 			{recommendedProducts.length > 0 && (
 				<ProductsGroupList
 					className='mt-20'
 					listClassName='grid-cols-4'
 					title='Рекомендации'
-					products={recommendedProducts}
+					items={recommendedProducts}
 					categoryId={product.category.id}
 				/>
 			)}

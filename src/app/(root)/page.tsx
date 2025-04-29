@@ -7,7 +7,7 @@ import { ProductsGroupList } from '@/components/shared/products-group-list';
 import { Title } from '@/components/shared/title';
 import { TopBar } from '@/components/shared/top-bar';
 import { GetSearchParams, findPizzas } from '@/lib/find-pizzas';
-import { CategoryProducts } from '../../../@types/prisma';
+import { CategoryProducts, ProductWithRelations } from '../../../@types/prisma';
 
 // Вспомогательная функция для безопасного получения значения
 async function safelyResolveParams(params: GetSearchParams): Promise<Record<string, string>> {
@@ -41,7 +41,7 @@ export default async function HomePage({ searchParams }: { searchParams: GetSear
 	const resolvedParams = await safelyResolveParams(searchParams);
 
 	// Передаем оригинальный searchParams в findPizzas, так как она уже умеет работать с асинхронными параметрами
-	const [categoryProducts, meta] = await findPizzas(searchParams);
+	const { data: categoryProducts, meta } = await findPizzas(searchParams);
 
 	return (
 		<>
@@ -72,7 +72,7 @@ export default async function HomePage({ searchParams }: { searchParams: GetSear
 										<ProductsGroupList
 											key={category.id}
 											title={category.name}
-											products={category.products}
+											items={category.products as ProductWithRelations[]}
 											categoryId={category.id}
 										/>
 									),
@@ -82,7 +82,7 @@ export default async function HomePage({ searchParams }: { searchParams: GetSear
 						<div className='flex items-center gap-6 mt-12'>
 							<Pagination
 								pageCount={meta.pageCount}
-								currentPage={meta.currentPage}
+								currentPage={meta.page}
 							/>
 							<span className='text-sm text-gray-400'>5 из 65</span>
 						</div>

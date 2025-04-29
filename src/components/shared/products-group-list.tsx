@@ -4,35 +4,34 @@ import React from 'react';
 import { Title } from './title';
 import { ProductCard } from './product-card';
 import { cn } from '@/lib/utils';
-import { useIntersection, IntersectionObserverOptions } from 'react-use';
+import { useIntersection } from 'react-use';
 import { useCategoryStore } from '../../../store/category';
-import { CategoryProducts } from '../../../@types/prisma';
-import { Product, ProductItem } from '@prisma/client';
+// import { CategoryProducts } from '../../../@types/prisma';
+import { Ingredient, Product, ProductItem } from '@prisma/client';
+
+type ProductWithRelations = Product & { items: ProductItem[]; ingredients: Ingredient[] };
 
 interface Props {
 	title: string;
-	products: CategoryProducts['products'];
+	// products: CategoryProducts['products'];
 	className?: string;
 	listClassName?: string;
 	categoryId: number;
-}
-
-interface ProductWithItems extends Product {
-	items: ProductItem[];
+	items: ProductWithRelations[];
 }
 
 export const ProductsGroupList = ({
 	title,
-	products,
+	items,
 	listClassName,
 	categoryId,
 	className,
 }: Props) => {
 	const setActiveId = useCategoryStore(state => state.setActiveId);
-	const intersectionRef = React.useRef(null);
-	const intersection = useIntersection(intersectionRef, {
+	const intersectionRef = React.useRef<HTMLDivElement>(null);
+	const intersection = useIntersection(intersectionRef as React.RefObject<HTMLElement>, {
 		threshold: 0.4,
-	} as IntersectionObserverOptions);
+	});
 
 	React.useEffect(() => {
 		if (intersection?.isIntersecting) {
@@ -52,15 +51,17 @@ export const ProductsGroupList = ({
 			<div
 				ref={intersectionRef}
 				className={cn('grid grid-cols-3 gap-[50px]', listClassName)}>
-				{products
-					.filter((product: ProductWithItems) => product.items.length > 0)
-					.map((product: ProductWithItems, i: number) => (
+				{items
+					.filter(product => product.items.length > 0)
+					.map(product => (
 						<ProductCard
 							key={product.id}
 							id={product.id}
 							name={product.name}
 							imageUrl={product.imageUrl}
 							price={product.items[0].price}
+							ingredients={product.ingredients}
+							productItemId={product.items[0].id}
 						/>
 					))}
 			</div>

@@ -20,8 +20,8 @@ export const Title = ({ text, size = 'sm', className } : Props) => {
   } as const;
 
   const mapClassNameBySize = {
-    xs: 'text-[16px]',
-    sm: 'text-[22px]',
+    xs: 'text-[15px]',
+    sm: 'text-[18px]',
     md: 'text-[26px]',
     lg: 'text-[32px]',
     xl: 'text-[40px]',

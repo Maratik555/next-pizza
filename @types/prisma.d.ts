@@ -1,5 +1,7 @@
-import type { Category, Product, ProductItem } from '@prisma/client';
+import type { Category, Product, ProductItem, Ingredient } from '@prisma/client';
+
+export type ProductWithRelations = Product & { items: ProductItem[]; ingredients: Ingredient[] };
 
 type CategoryProducts = Category & {
-    products: Array<Product & { items: ProductItem[] }>;
+	products: Array<ProductWithRelations>;
 };

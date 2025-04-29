@@ -42,7 +42,7 @@ export const CartItemInfo = ({
 	return (
 		<div>
 			<div className='flex items-center justify-between'>
-				<h2 className='text-lg font-bold flex-1 leading-6'>{name}</h2>
+				<h2 className='text-base font-bold flex-1 leading-6'>{name}</h2>
 			</div>
 			<p className='text-xs text-gray-400'>{details.join(', ')}</p>
 		</div>

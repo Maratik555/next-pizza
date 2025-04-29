@@ -94,35 +94,42 @@ export const findPizzas = async (params: GetSearchParams = {}) => {
 		some: itemsWhere,
 	};
 
-	const result = await prisma.category
-		.paginate({
-			include: {
-				products: {
-					orderBy: {
-						id: 'desc',
-					},
-					where,
-					include: {
-						items: {
-							where: {
-								price: {
-									gte: minPrice,
-									lte: maxPrice,
-								},
-							},
-							orderBy: {
-								price: 'asc',
+	const result = await prisma.category.findMany({
+		skip: (pageNum - 1) * limitNum,
+		take: limitNum,
+		include: {
+			products: {
+				orderBy: {
+					id: 'desc',
+				},
+				where,
+				include: {
+					items: {
+						where: {
+							price: {
+								gte: minPrice,
+								lte: maxPrice,
 							},
 						},
+						orderBy: {
+							price: 'asc',
+						},
 					},
+					ingredients: true,
 				},
 			},
-		})
-		.withPages({
+		},
+	});
+
+	const total = await prisma.category.count();
+
+	return {
+		data: result,
+		meta: {
+			total,
 			page: pageNum,
 			limit: limitNum,
-			includePageCount: true,
-		});
-
-	return result;
+			pageCount: Math.ceil(total / limitNum),
+		},
+	};
 };
