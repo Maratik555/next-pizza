@@ -26,19 +26,6 @@ export const CartDrawer = ({ children }: React.PropsWithChildren) => {
 
 	const { totalAmount, items, loading } = useCart(true);
 
-	// Добавляем console.log для отладки
-	React.useEffect(() => {
-		if (items.length > 0) {
-			console.log('Cart items:', items);
-			items.forEach(item => {
-				console.log(
-					`Item ${item.id} - pizzaSize: ${item.pizzaSize}, type: ${item.type}, productItem:`,
-					item.productItem,
-				);
-			});
-		}
-	}, [items]);
-
 	return (
 		<Sheet>
 			{/* Using asChild to prevent button nesting issues */}

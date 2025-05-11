@@ -1,4 +1,4 @@
-import { prisma } from '../../../../../lib/prisma';
+import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 
 export async function GET(_: Request, { params }: { params: { id: string } }) {
@@ -11,9 +11,6 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
 		include: {
 			ingredients: true,
 			items: {
-				orderBy: {
-					createdAt: 'desc',
-				},
 				include: {
 					product: {
 						include: {

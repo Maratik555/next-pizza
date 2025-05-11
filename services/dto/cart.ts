@@ -12,6 +12,8 @@ export type CartResponse = Cart & {
 };
 
 export interface CreateCartItemValues {
+	pizzaSize?: number | null;
+	type?: number | null;
 	productItemId: number;
 	ingredientsIds?: number[];
 	quantity: number;

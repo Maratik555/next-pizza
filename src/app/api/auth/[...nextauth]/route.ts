@@ -1,23 +1,11 @@
 import NextAuth, { NextAuthOptions } from 'next-auth';
+import { JWT } from 'next-auth/jwt';
 import { prisma } from '@/lib/prisma';
 import { compare, hashSync } from 'bcrypt';
 import { UserRole } from '@prisma/client';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import GitHubProvider from 'next-auth/providers/github';
-
-// Расширяем типы NextAuth
-declare module 'next-auth' {
-	interface Session {
-		user: {
-			id: string;
-			name?: string | null;
-			email?: string | null;
-			image?: string | null;
-			role?: UserRole;
-		};
-	}
-}
 
 export const authOptions: NextAuthOptions = {
 	session: {

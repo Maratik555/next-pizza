@@ -3,7 +3,7 @@ import { Filters } from '@/components/shared/filters';
 
 import { Pagination } from '@/components/shared/pagination';
 import { ProductsGroupList } from '@/components/shared/products-group-list';
-// import { Stories } from '@/components/shared/stories';
+import { Stories } from '@/components/shared/stories';
 import { Title } from '@/components/shared/title';
 import { TopBar } from '@/components/shared/top-bar';
 import { GetSearchParams, findPizzas } from '@/lib/find-pizzas';
@@ -57,7 +57,7 @@ export default async function HomePage({ searchParams }: { searchParams: GetSear
 				categories={categoryProducts.filter((c: CategoryProducts) => c.products.length > 0)}
 			/>
 
-			{/*<Stories />*/}
+			<Stories />
 
 			<Container className='pb-14 mt-10'>
 				<div className='flex gap-[70px]'>

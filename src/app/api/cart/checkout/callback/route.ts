@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import { OrderStatus } from '@prisma/client';
 import { sendEmail } from '@/lib/send-email';
 import { prisma } from '@/lib/prisma';
-import { CartItemDTO } from '../../../../../services/dto/cart.dto';
+import { CartItemDTO } from './../../../../../../services/dto/cart';
 
 type PaymentCallbackData = {
 	type: string;
@@ -74,7 +74,9 @@ export async function POST(req: NextRequest) {
     </ul>
     `;
 
-		await sendEmail(order.user.email, `Next Pizza / Заказ #${order?.id} оплачен!`, html);
+		if (order?.user) {
+			await sendEmail(order.user.email, `Next Pizza / Заказ #${order?.id} оплачен!`, html);
+		}
 	}
 
 	return new Response(null, {

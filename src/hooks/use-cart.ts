@@ -1,7 +1,7 @@
 import debounce from 'lodash.debounce';
 import { ICartItem, useCartStore } from '../../store/cart';
 import React from 'react';
-import { CreateCartItemValues } from '../../services/dto/cart.dto';
+import { CreateCartItemValues } from '../../services/dto/cart';
 
 type ReturnProps = {
 	totalAmount: number;
@@ -9,6 +9,7 @@ type ReturnProps = {
 	loading: boolean;
 	updateItemQuantity: (id: number, quantity: number) => void;
 	removeCartItem: (id: number) => void;
+	removeItemsAll: () => void;
 	addCartItem: (values: CreateCartItemValues) => void;
 	isInitialized: boolean; // New flag to indicate if data is ready
 };
@@ -25,6 +26,7 @@ export const useCart = (runFetch?: boolean): ReturnProps => {
 	const loading = useCartStore(state => state?.loading ?? false);
 	const addCartItem = useCartStore(state => state?.addCartItem ?? (() => {}));
 	const removeCartItem = useCartStore(state => state?.removeCartItem ?? (() => {}));
+	const removeItemsAll  = useCartStore(state => state?.removeItemsAll ?? (() => {}));
 
 	// Safer memoization with explicit type checking
 	const updateItemQuantity = React.useMemo(() => {
@@ -68,6 +70,7 @@ export const useCart = (runFetch?: boolean): ReturnProps => {
 		addCartItem,
 		updateItemQuantity,
 		removeCartItem,
-		isInitialized
+		isInitialized,
+		removeItemsAll,
 	};
 };

@@ -70,18 +70,17 @@ export default async function ProductPage({ params }: { params: { id: string } }
 
 	return (
 		<Container className='flex flex-col my-10'>
-			{isPizzaForm && <ChoosePizzaForm
+			{isPizzaForm ? <ChoosePizzaForm
 				imageUrl={product.imageUrl}
 				name={product.name}
 				items={product.items}
 				ingredients={product.ingredients}
-			/>
-			}
-			<ChooseProductForm
+			/> : <ChooseProductForm
 				imageUrl={product.imageUrl}
 				name={product.name}
 				items={product.items}
 			/>
+			}
 			{recommendedProducts.length > 0 && (
 				<ProductsGroupList
 					className='mt-20'

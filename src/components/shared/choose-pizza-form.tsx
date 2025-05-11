@@ -8,7 +8,7 @@ import { Button } from '../ui/button';
 import { Title } from './title';
 import { PizzaSelector } from './pizza-selector';
 import { IProduct, useChoosePizza } from '@/hooks/use-choose-pizza';
-import { useSet } from 'react-use';
+// import { useSet } from 'react-use';
 import toast from 'react-hot-toast';
 
 interface Props {
@@ -83,7 +83,6 @@ export const ChoosePizzaForm = ({
 						selectedIds={selectedIngredientsIds}
 					/>
 				</div>
-
 				<Button
 					loading={loading}
 					onClick={handleClickAdd}
