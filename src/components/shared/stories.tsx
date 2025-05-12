@@ -48,6 +48,7 @@ export const Stories = ({ className }: Props) => {
 						key={story.id}
 						onClick={() => onClickStory(story)}
 						className='rounded-md cursor-pointer'
+						alt='Story'
 						height={250}
 						width={200}
 						src={story.previewImageUrl}

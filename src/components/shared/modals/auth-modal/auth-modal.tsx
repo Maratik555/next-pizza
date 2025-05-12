@@ -61,7 +61,8 @@ export const AuthModal = ({ open, onClose }: Props) => {
             }
             type="button"
             className="gap-2 h-12 p-2 flex-1">
-            <img
+              <img
+              alt="Google"
               className="w-6 h-6"
               src="https://fonts.gstatic.com/s/i/productlogos/googleg/v6/24px.svg"
             />

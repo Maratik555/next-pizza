@@ -18,14 +18,14 @@ interface Props extends SelectProps {
   placeholder?: string;
 }
 
-export const FormSelect: React.FC<Props> = ({
+export const FormSelect = ({
   label,
   required,
   name,
   items,
   placeholder,
   ...props
-}) => {
+}: Props) => {
   const {
     control,
     formState: { errors },

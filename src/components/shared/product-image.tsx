@@ -8,7 +8,7 @@ interface Props {
 	size: number; // PizzaSize;
 }
 
-export const ProductImage = React.memo(({ className, imageUrl, size }: Props) => {
+export const ProductImage = React.memo(function ProductImage({ className, imageUrl, size }: Props) {
 	// Мемоизируем классы для размеров
 	const sizeClass = React.useMemo(() => {
 		return {

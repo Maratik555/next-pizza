@@ -21,7 +21,7 @@ interface Props {
   data: User;
 }
 
-export const ProfileForm: React.FC<Props> = ({ data }) => {
+export const ProfileForm = ({ data } : Props) => {
   const form = useForm({
     resolver: zodResolver(formRegisterSchema),
     defaultValues: {
@@ -43,8 +43,8 @@ export const ProfileForm: React.FC<Props> = ({ data }) => {
       toast.success('Данные обновлены 📝', {
         icon: '✅',
       });
-    } catch (error) {
-      return toast.error('Ошибка при обновлении данных', {
+    } catch (err) {
+      return toast.error('Ошибка при обновлении данных ' + err, {
         icon: '❌',
       });
     }

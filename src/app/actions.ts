@@ -4,21 +4,21 @@ import { TFormOrderData } from '@/components/shared/schemas/order-form-schema';
 import { getUserSession } from '@/lib/get-user-session';
 import { prisma } from '@/lib/prisma';
 import { sendEmail } from '@/lib/send-email';
-import { OrderStatus, Prisma, UserRole } from '@prisma/client';
+import { OrderStatus, Prisma} from '@prisma/client';
 import { hashSync } from 'bcrypt';
 import { cookies } from 'next/headers';
 import { createPayment } from '@/lib/create-payment';
 // import { CreateUserFormValues } from '@/components/shared/dashboard/forms/create-user-form/constants';
 import { revalidatePath } from 'next/cache';
-import toast from 'react-hot-toast';
+
 
 export async function registerUser(body: Prisma.UserCreateInput) {
 	// try {
-	const user = await prisma.user.findFirst({
-		where: {
-			email: body.email,
-		},
-	});
+	// const user = await prisma.user.findFirst({
+	// 	where: {
+	// 		email: body.email,
+	// 	},
+	// });
 
 	// if (user) {
 	// 	if (!user.verified) {

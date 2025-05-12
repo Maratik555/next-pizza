@@ -17,7 +17,12 @@ interface Props {
 	selectedValue?: Variant['value'];
 }
 
-export const GroupVariants = React.memo(({ items, onClick, className, selectedValue }: Props) => {
+export const GroupVariants = React.memo(function GroupVariants({
+	items,
+	onClick,
+	className,
+	selectedValue,
+}: Props) {
 	// Мемоизируем обработчики кликов для каждого элемента
 	const getClickHandler = React.useCallback(
 		(value: string) => {
@@ -29,10 +34,7 @@ export const GroupVariants = React.memo(({ items, onClick, className, selectedVa
 	return (
 		<div className={cn(className, 'flex justify-between bg-[#F3F3F7] rounded-3xl p-1 select-none')}>
 			{items.map(item => {
-				const clickHandler = React.useMemo(
-					() => getClickHandler(item.value),
-					[getClickHandler, item.value],
-				);
+				const clickHandler = getClickHandler(item.value);
 
 				return (
 					<div

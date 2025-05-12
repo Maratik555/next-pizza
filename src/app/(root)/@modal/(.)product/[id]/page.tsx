@@ -2,9 +2,8 @@ import { ChooseProductModal } from '@/components/shared/modals/choose-product-mo
 import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 
-export default async function PhotoModal({ params }: { params: { id: string } }) {
-	const awaitedParams = await params;
-	const id = awaitedParams.id;
+export default async function PhotoModal({ params }: { params: Promise<{ id: string }> }) {
+	const { id } = await params; // Ждем разрешения промиса
 
 	const product = await prisma.product.findFirst({
 		where: {
@@ -13,9 +12,6 @@ export default async function PhotoModal({ params }: { params: { id: string } })
 		include: {
 			ingredients: true,
 			items: {
-				// orderBy: {
-				//     id: 'desc',
-				// },
 				include: {
 					product: {
 						include: {

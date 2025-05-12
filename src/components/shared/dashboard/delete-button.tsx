@@ -17,7 +17,7 @@ interface Props {
   className?: string;
 }
 
-export const DeleteButton: React.FC<Props> = ({ id, type, className }) => {
+export const DeleteButton = ({ id, type }: Props) => {
   const onClickRemove = async (id: number) => {
     if (type === 'user') {
       await deleteUser(id);

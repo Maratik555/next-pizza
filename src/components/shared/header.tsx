@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 
 import { Container } from './container';
 import { SearchInput } from './search-input';
@@ -43,7 +42,7 @@ export const Header = ({ className, hasSearch = true, hasCart = true }: Props) =
                 });
             }, 1000);
         }
-    }, []);
+    }, [router, searchParams]);
 
     const onClickOpenAuthModal = () => setOpenAuthModal(true);
     const onClickCloseAuthModal = () => setOpenAuthModal(false);
@@ -53,7 +52,7 @@ export const Header = ({ className, hasSearch = true, hasCart = true }: Props) =
             <Container className="flex items-center justify-between py-8">
                 <Link href="/">
                     <div className="flex items-center gap-4">
-                        <Image src="/logo.png" width={35} height={35} alt="Logo" />
+                        <img src="/logo.png" width={35} height={35} alt="Logo" />
                         <div>
                             <h1 className="text-2xl uppercase font-black">Next Pizza</h1>
                             <p className="text-sm text-gray-400 leading-3">вкусней уже некуда</p>

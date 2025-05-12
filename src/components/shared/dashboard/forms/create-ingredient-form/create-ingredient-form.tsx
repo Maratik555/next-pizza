@@ -8,11 +8,7 @@ import { FormInput } from '@/components/shared/form/form-input';
 import { useRouter, useParams } from 'next/navigation';
 import {
 	createIngredient,
-	createProduct,
-	createUser,
-	updateIngredient,
-	updateProduct,
-	updateUser,
+	updateIngredient
 } from '@/app/actions';
 import toast from 'react-hot-toast';
 import { DashboardFormHeader } from '../../dashboard-form-header';
@@ -20,7 +16,7 @@ import { DashboardFormHeader } from '../../dashboard-form-header';
 //   CreateProductFormSchema,
 //   CreateProductFormValues,
 // } from "@/components/shared/dashboard/forms/create-product-form/constants";
-import { Ingredient, Product } from '@prisma/client';
+import { Ingredient } from '@prisma/client';
 import { Trash2 } from 'lucide-react';
 import { UploadButton } from '@/lib/uploadthing';
 import {
@@ -32,7 +28,7 @@ interface Props {
 	values?: Ingredient;
 }
 
-export const CreateIngredientForm: React.FC<Props> = ({ values }) => {
+export const CreateIngredientForm = ({ values }: Props) => {
 	const params = useParams<{ id: string }>();
 	const router = useRouter();
 	const [loading, setLoading] = React.useState(false);
@@ -118,6 +114,7 @@ export const CreateIngredientForm: React.FC<Props> = ({ values }) => {
 							<img
 								className='object-cover rounded'
 								src={imageUrl}
+								alt='Ingredient Image'
 							/>
 							<button
 								onClick={onClickRemoveImage}
@@ -129,7 +126,7 @@ export const CreateIngredientForm: React.FC<Props> = ({ values }) => {
 						<div>
 							<UploadButton
 								endpoint='imageUploader'
-								onClientUploadComplete={(res: any) => onUploadSuccess(res[0].url)}
+								onClientUploadComplete={res => onUploadSuccess(res[0].url)}
 								onUploadError={onUploadError}
 							/>
 							{form.formState.errors.imageUrl && (

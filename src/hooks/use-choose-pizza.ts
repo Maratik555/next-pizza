@@ -2,7 +2,6 @@ import React from 'react';
 import toast from 'react-hot-toast';
 import { useSet } from 'react-use';
 import { Ingredient, Product, ProductItem } from '@prisma/client';
-
 import {
 	PizzaSize,
 	PizzaSizeItem,
@@ -40,7 +39,7 @@ export const useChoosePizza = (items?: IProduct['items']) => {
 		if (availableSize) {
 			setSize(Number(availableSize.value) as PizzaSize);
 		}
-	}, [type]);
+	}, [type, availablePizzaSizes]);
 
 	const addPizza = async () => {
 		if (productItem) {

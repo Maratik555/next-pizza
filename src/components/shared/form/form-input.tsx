@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { RequiredSymbol } from '../required-symbol';
@@ -12,7 +14,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   className?: string;
 }
 
-export const FormInput: React.FC<Props> = ({ className, name, label, required, ...props }) => {
+export const FormInput = ({ className, name, label, required, ...props }: Props) => {
   const {
     register,
     formState: { errors },

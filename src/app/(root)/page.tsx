@@ -36,12 +36,16 @@ async function safelyResolveParams(params: GetSearchParams): Promise<Record<stri
 	return resolved;
 }
 
-export default async function HomePage({ searchParams }: { searchParams: GetSearchParams }) {
+export default async function HomePage({
+	searchParams,
+}: {
+	searchParams: Promise<GetSearchParams>;
+}) {
 	// Предварительно обрабатываем searchParams для клиентских компонентов
-	const resolvedParams = await safelyResolveParams(searchParams);
+	const resolvedParams = await safelyResolveParams(await searchParams);
 
-	// Передаем оригинальный searchParams в findPizzas, так как она уже умеет работать с асинхронными параметрами
-	const { data: categoryProducts, meta } = await findPizzas(searchParams);
+	// Передаем оригинальный searchParams в findPizzas
+	const { data: categoryProducts, meta } = await findPizzas(await searchParams);
 
 	return (
 		<>

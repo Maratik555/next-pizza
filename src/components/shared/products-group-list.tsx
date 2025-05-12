@@ -37,7 +37,7 @@ export const ProductsGroupList = ({
 		if (intersection?.isIntersecting) {
 			setActiveId(categoryId);
 		}
-	}, [intersection?.isIntersecting]);
+	}, [intersection?.isIntersecting, categoryId, setActiveId]);
 
 	return (
 		<div

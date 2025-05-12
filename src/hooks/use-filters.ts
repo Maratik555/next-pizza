@@ -1,5 +1,5 @@
 import { useSet } from 'react-use';
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 // Используем обычный интерфейс для синхронных параметров
 interface FiltersParams {
@@ -17,11 +17,11 @@ interface PriceProps {
 	priceTo?: number;
 }
 
-interface QueryFilters extends PriceProps {
-	pizzaTypes: string;
-	sizes: string;
-	ingredients: string;
-}
+// interface QueryFilters extends PriceProps {
+// 	pizzaTypes: string;
+// 	sizes: string;
+// 	ingredients: string;
+// }
 
 export interface Filters {
 	sizes: Set<string>;

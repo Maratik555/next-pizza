@@ -36,12 +36,12 @@ export const useCart = (runFetch?: boolean): ReturnProps => {
 				return debounce(storeState.updateItemQuantity, 200);
 			}
 			// Fallback function that does nothing
-			return debounce((id: number, qty: number) => {
+			return debounce(() => {
 				console.warn('updateItemQuantity not available in store');
 			}, 200);
 		} catch (error) {
 			console.error('Error creating updateItemQuantity function:', error);
-			return debounce((id: number, qty: number) => {}, 200);
+			return debounce(() => {}, 200);
 		}
 	}, []);
 

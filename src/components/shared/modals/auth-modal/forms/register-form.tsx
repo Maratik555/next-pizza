@@ -4,8 +4,7 @@ import { Button } from '@/components/ui/button';
 
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { TFormRegisterData, formRegisterSchema } from './schemas';
+import { TFormRegisterData } from './schemas';
 import toast from 'react-hot-toast';
 import { FormInput } from '@/components/shared/form';
 import { registerUser } from '@/app/actions';
@@ -15,7 +14,7 @@ interface Props {
 	onClickLogin?: VoidFunction;
 }
 
-export const RegisterForm: React.FC<Props> = ({ onClose, onClickLogin }) => {
+export const RegisterForm = ({ onClose }: Props) => {
 	const form = useForm<TFormRegisterData>({
 		// Убери resolver для тестирования
 		// resolver: zodResolver(formRegisterSchema),

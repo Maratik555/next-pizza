@@ -8,9 +8,7 @@ import { FormInput } from "@/components/shared/form/form-input";
 import { useRouter, useParams } from "next/navigation";
 import {
   createProduct,
-  createUser,
   updateProduct,
-  updateUser,
 } from "@/app/actions";
 import toast from "react-hot-toast";
 import { DashboardFormHeader } from "../../dashboard-form-header";
@@ -26,7 +24,7 @@ interface Props {
   values?: Product;
 }
 
-export const CreateProductForm: React.FC<Props> = ({ values }) => {
+export const CreateProductForm = ({ values }: Props) => {
   const params = useParams<{ id: string }>();
   const router = useRouter();
   const [loading, setLoading] = React.useState(false);
@@ -97,7 +95,7 @@ export const CreateProductForm: React.FC<Props> = ({ values }) => {
 
           {imageUrl ? (
             <div className="relative w-40 h-40">
-              <img className="object-cover rounded" src={imageUrl} />
+              <img className="object-cover rounded" src={imageUrl} alt="Product Image"  />
               <button
                 onClick={onClickRemoveImage}
                 className="absolute top-2 right-2 bg-red-600 rounded-sm p-2"

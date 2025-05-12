@@ -68,8 +68,8 @@ async function findOrCreateCart(userId: number, cartToken: string | undefined) {
     userCart = await prisma.cart.create({
       data: {
         userId,
-        // @ts-expect-error token может быть undefined, но prisma его обработает
-        token: cartToken,
+
+        token: cartToken ?? '',
       },
     });
   }
@@ -113,13 +113,20 @@ async function getCartTotalAmount(cartId: number): Promise<number> {
   try {
     const totalAmount = userCartAfterUpdate.items.reduce((acc, item) => {
       if (!item || !item.productItem) return acc;
-      try {
-        // @ts-ignore
-        return acc + calcCartItemTotalAmount(item);
-      } catch (err) {
-        console.error('Ошибка при расчете товара:', err);
-        return acc;
+        try {
+          // Убедитесь, что ingredients присутствуют
+          const itemWithIngredients = {
+            ...item,
+            productItem: {
+                ...item.productItem,
+                ingredients: item.ingredients || []
+            }
+          };
+          return acc + calcCartItemTotalAmount(itemWithIngredients);
+        } catch (err) {
+          console.error('Ошибка при расчете товара:', err);
       }
+        return acc;
     }, 0);
 
     return totalAmount ?? 0;
@@ -196,14 +203,14 @@ export async function POST(req: NextRequest) {
     });
 
     if (findCartItem) {
-      const updatedCartItem = await prisma.cartItem.update({
-        where: {
-          id: findCartItem.id,
-        },
-        data: {
-          quantity: findCartItem.quantity + data.quantity,
-        },
-      });
+      // const updatedCartItem = await prisma.cartItem.update({
+      //   where: {
+      //     id: findCartItem.id,
+      //   },
+      //   data: {
+      //     quantity: findCartItem.quantity + data.quantity,
+      //   },
+      // });
 
       const totalAmount = await getCartTotalAmount(userCart.id);
       const updatedCart = await updateCartTotalAmount(userCart.id, totalAmount);

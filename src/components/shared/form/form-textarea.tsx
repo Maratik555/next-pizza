@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { X } from 'lucide-react';
@@ -10,7 +12,7 @@ interface Props extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   required?: boolean;
 }
 
-export const FormTextarea: React.FC<Props> = ({ className, name, label, required, ...props }) => {
+export const FormTextarea = ({ className, name, label, required, ...props }: Props) => {
   const {
     register,
     formState: { errors },

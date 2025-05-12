@@ -63,7 +63,7 @@ export default function CartPage() {
 		return () => {
 			isMounted = false;
 		};
-	}, [session]);
+	}, [session, form]);
 
 	const onClickCountButton = (id: number, quantity: number, type: 'plus' | 'minus') => {
 		const value = type === 'plus' ? quantity + 1 : quantity - 1;
