@@ -56,7 +56,7 @@ export async function createPayment(details: {
       },
       confirmation: {
         type: 'redirect',
-        return_url: process.env.YOOKASSA_CALLBACK_URL
+        return_url: 'https://next-pizza-rust.vercel.app/?paid'
       }
     },
     {
