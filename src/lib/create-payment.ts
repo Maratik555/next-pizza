@@ -56,8 +56,8 @@ export async function createPayment(details: {
       },
       confirmation: {
         type: 'redirect',
-        return_url: 'http://localhost:3000/?paid'
-      },
+        return_url: process.env.YOOKASSA_CALLBACK_URL
+      }
     },
     {
       auth: {
