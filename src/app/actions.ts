@@ -372,11 +372,11 @@ export async function updateProductItem(id: number, data: Prisma.ProductItemUpda
 	}
 }
 
-export async function createProductItem(data: any) {
+export async function createProductItem(data: Prisma.ProductItemUncheckedCreateInput) {
 	try {
 		await prisma.productItem.create({
 			data: {
-				// name: data.name,
+				name: data.name,
 				price: data.price,
 				size: data.size,
 				pizzaType: data.pizzaType,
