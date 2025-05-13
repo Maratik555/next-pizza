@@ -38,6 +38,7 @@ export const CreateProductItemForm: React.FC<Props> = ({ values, products }) => 
       setLoading(true);
 
       const fields = {
+        name: '',
         price: Number(data.price),
         size: Number(data.size),
         pizzaType: Number(data.pizzaType),
