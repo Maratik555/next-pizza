@@ -20,7 +20,7 @@ interface Props {
 	className?: string;
 }
 
-export const StoryModal = ({ className, items, activeIndex }: Props) => {
+export const StoryModal = ({ className, activeIndex }: Props) => {
 	return (
 		<div
 			className={cn(

@@ -376,6 +376,7 @@ export async function createProductItem(data: Prisma.ProductItemUncheckedCreateI
 	try {
 		await prisma.productItem.create({
 			data: {
+				name: data.name,
 				price: data.price,
 				size: data.size,
 				pizzaType: data.pizzaType,
