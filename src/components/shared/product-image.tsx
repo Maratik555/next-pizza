@@ -1,11 +1,11 @@
-// import { PizzaSize } from '@/hooks/use-choose-pizza';
+import { PizzaSize } from '@/lib/pizza-details-to-text';
 import { cn } from '@/lib/utils';
 import React from 'react';
 
 interface Props {
 	className?: string;
 	imageUrl: string;
-	size: number; // PizzaSize;
+	size: PizzaSize;
 }
 
 export const ProductImage = React.memo(function ProductImage({ className, imageUrl, size }: Props) {
