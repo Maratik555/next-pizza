@@ -39,7 +39,7 @@ export const useChoosePizza = (items?: IProduct['items']) => {
 		if (availableSize) {
 			setSize(Number(availableSize.value) as PizzaSize);
 		}
-	}, [type, availablePizzaSizes]);
+	}, [type]);
 
 	const addPizza = async () => {
 		if (productItem) {
