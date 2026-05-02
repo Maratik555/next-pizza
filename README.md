@@ -1,7 +1,5 @@
 <div align="center">
 
-<img src="public/assets/logo.png" width="140" alt="Next Pizza" />
-
 # 🍕 Next Pizza
 
 **Современный интернет-магазин пиццерии на Next.js 15 + React 19**
