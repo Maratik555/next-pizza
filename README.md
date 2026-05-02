@@ -1,36 +1,127 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
+<img src="public/assets/logo.png" width="140" alt="Next Pizza" />
 
-First, run the development server:
+# 🍕 Next Pizza
+
+**Современный интернет-магазин пиццерии на Next.js 15 + React 19**
+
+[![Next.js](https://img.shields.io/badge/Next.js-15.1-black?logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-61dafb?logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript)](https://www.typescriptlang.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-6-2d3748?logo=prisma)](https://www.prisma.io/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?logo=postgresql)](https://www.postgresql.org/)
+[![Tailwind](https://img.shields.io/badge/Tailwind-3-38bdf8?logo=tailwindcss)](https://tailwindcss.com/)
+
+</div>
+
+---
+
+## 📸 Превью
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/home.png" alt="Главная" /></td>
+    <td width="50%"><img src="docs/screenshots/categories.png" alt="Категории" /></td>
+  </tr>
+  <tr>
+    <td colspan="2"><img src="docs/screenshots/product.png" alt="Карточка продукта" /></td>
+  </tr>
+</table>
+
+---
+
+## ✨ Возможности
+
+- 🍕 **Каталог товаров** — пиццы, комбо, закуски, коктейли, напитки, кофе
+- 🛒 **Корзина** на Zustand с синхронизацией на сервере
+- 🎨 **Конструктор пиццы** — выбор размера, типа теста, ингредиентов
+- 🔍 **Поиск** товаров с автоподсказками
+- 📦 **Stories** для акций (`react-insta-stories`)
+- 🔐 **Авторизация** через NextAuth (email/password + OAuth)
+- 💳 **Оплата через ЮKassa** (YooKassa)
+- 📧 **Email‑уведомления** через Resend
+- 🗺️ **Подсказки адресов** через DaData
+- 📤 **Загрузка файлов** через UploadThing
+- 📱 **Адаптивная вёрстка** (Tailwind + Radix UI)
+- ✅ **Валидация форм** на React Hook Form + Zod
+
+---
+
+## 🛠️ Стек
+
+| Слой         | Технологии                                        |
+|--------------|---------------------------------------------------|
+| Фронтенд     | Next.js 15 (App Router), React 19, TypeScript     |
+| Стили        | Tailwind CSS, Radix UI, lucide-react              |
+| Состояние    | Zustand                                           |
+| Формы        | React Hook Form, Zod                              |
+| Бэкенд       | Next.js Route Handlers, Prisma 6                  |
+| База данных  | PostgreSQL                                        |
+| Auth         | NextAuth.js + Prisma Adapter                      |
+| Платежи      | ЮKassa (YooKassa)                                 |
+| Email        | Resend                                            |
+| Загрузки     | UploadThing                                       |
+
+---
+
+## 🚀 Быстрый старт
 
 ```bash
+git clone https://github.com/Maratik555/next-pizza.git
+cd next-pizza
+npm install
+cp .env.example .env
+npm run prisma:push
+npm run prisma:seed
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Открыть [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🔑 Переменные окружения (`.env`)
 
-## Learn More
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/next_pizza"
+NEXTAUTH_SECRET="..."
+NEXTAUTH_URL="http://localhost:3000"
 
-To learn more about Next.js, take a look at the following resources:
+# OAuth
+GITHUB_ID=""
+GITHUB_SECRET=""
+GOOGLE_ID=""
+GOOGLE_SECRET=""
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# ЮKassa
+YOOKASSA_STORE_ID=""
+YOOKASSA_API_KEY=""
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Resend
+RESEND_API_KEY=""
 
-## Deploy on Vercel
+# UploadThing
+UPLOADTHING_SECRET=""
+UPLOADTHING_APP_ID=""
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📜 Скрипты
+
+| Команда                  | Описание                              |
+|--------------------------|---------------------------------------|
+| `npm run dev`            | Запуск dev‑сервера                    |
+| `npm run build`          | Production‑сборка                     |
+| `npm run start`          | Запуск production‑сборки              |
+| `npm run lint`           | ESLint                                |
+| `npm run prisma:push`    | Применить схему к БД                  |
+| `npm run prisma:studio`  | Открыть Prisma Studio                 |
+| `npm run prisma:seed`    | Заполнить БД тестовыми данными        |
+
+---
+
+<div align="center">
+Made with 🍕 by <a href="https://github.com/Maratik555">Marat</a>
+</div>
