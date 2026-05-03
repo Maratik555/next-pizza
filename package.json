@@ -36,7 +36,7 @@
     "clsx": "^2.1.1",
     "lodash.debounce": "^4.0.8",
     "lucide-react": "^0.475.0",
-    "next": "15.1.7",
+    "next": "15.1.11",
     "next-auth": "^4.24.11",
     "nextjs-toploader": "^3.8.16",
     "prisma-extension-pagination": "^0.7.5",
