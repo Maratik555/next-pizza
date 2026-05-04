@@ -43,7 +43,7 @@ export default async function HomePage({
 	const resolvedParams = await safelyResolveParams(await searchParams);
 
 	// Передаем оригинальный searchParams в findPizzas
-	const { data: categoryProducts, meta } = await findPizzas(await searchParams);
+	const { data: categoryProducts } = await findPizzas(await searchParams);
 
 	return (
 		<>
