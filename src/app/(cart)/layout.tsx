@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Header } from '@/components/shared/header';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'Next Pizza | Корзина',
@@ -13,7 +14,9 @@ export default async function CartLayout({
 }>) {
   return (
     <main className="min-h-screen bg-[#F4F1EE]">
-      <Header hasCart={false} hasSearch={false} className="border-gray-200" />
+      <Suspense fallback={<div className="h-[72px]" />}>
+        <Header hasCart={false} hasSearch={false} className="border-gray-200" />
+      </Suspense>
       {children}
     </main>
   );
