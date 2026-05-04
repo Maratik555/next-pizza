@@ -4,6 +4,7 @@
 
 html {
   scroll-behavior: smooth;
+  /* background-color: hsl(var(--background)); */
 }
 
 @media screen and (prefers-reduced-motion: reduce) {
@@ -14,6 +15,7 @@ html {
 
 @layer base {
   :root {
+    /* --background: #09080a; */
     --foreground: 20 14.3% 4.1%;
 
     --card: 0 0% 100%;
@@ -66,6 +68,19 @@ html {
   background: #dbdadd;
 }
 
+/* Скрытие полосы прокрутки */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari and Opera */
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -76,6 +91,7 @@ html {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }

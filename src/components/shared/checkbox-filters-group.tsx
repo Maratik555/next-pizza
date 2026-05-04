@@ -61,19 +61,19 @@ export const CheckboxFiltersGroup = ({
 
     return (
         <div className={className}>
-            <p className="font-bold mb-3">{title}</p>
+            <p className="font-bold mb-3 text-foreground">{title}</p>
 
             {showAll && (
                 <div className="mb-5">
                     <Input
                         onChange={onChangeSearchInput}
                         placeholder={searchInputPlaceholder}
-                        className="bg-gray-50 border-none"
+                        className="bg-white border-gray-300"
                     />
                 </div>
             )}
 
-            <div className="flex flex-col gap-4 max-h-96 pr-2 overflow-auto scrollbar">
+            <div className="flex flex-col gap-4 max-h-96 pr-2 overflow-auto scrollbar-hide">
                 {list.map((item, index) => (
                     <FilterCheckbox
                         key={index}
@@ -89,7 +89,7 @@ export const CheckboxFiltersGroup = ({
 
             {items.length > limit && (
                 <div className={showAll ? 'border-t border-t-neutral-100 mt-4' : ''}>
-                    <button onClick={() => setShowAll(!showAll)} className="text-primary mt-3">
+                    <button onClick={() => setShowAll(!showAll)} className="text-primary mt-3 font-medium">
                         {showAll ? 'Скрыть' : '+ Показать все'}
                     </button>
                 </div>

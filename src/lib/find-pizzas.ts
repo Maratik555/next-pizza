@@ -16,13 +16,8 @@ export interface GetSearchParams {
 const DEFAULT_MIN_PRICE = 0;
 const DEFAULT_MAX_PRICE = 1000;
 
-const DEFAULT_LIMIT = 12;
-const DEFAULT_PAGE = 1;
-
-// Вспомогательная функция для безопасного получения значения
 async function safelyGetValue<T>(value: T | Promise<T> | undefined): Promise<T | undefined> {
 	if (value === undefined) return undefined;
-
 	try {
 		return await value;
 	} catch (error) {
@@ -32,104 +27,78 @@ async function safelyGetValue<T>(value: T | Promise<T> | undefined): Promise<T |
 }
 
 export const findPizzas = async (params: GetSearchParams = {}) => {
-	// Безопасно получаем все параметры
 	const ingredients = await safelyGetValue(params.ingredients);
-	const pizzaTypes = await safelyGetValue(params.pizzaTypes);
-	const sizes = await safelyGetValue(params.sizes);
-	const priceFrom = await safelyGetValue(params.priceFrom);
-	const priceTo = await safelyGetValue(params.priceTo);
-	const limit = await safelyGetValue(params.limit);
-	const page = await safelyGetValue(params.page);
+	const pizzaTypes  = await safelyGetValue(params.pizzaTypes);
+	const sizes       = await safelyGetValue(params.sizes);
+	const priceFrom   = await safelyGetValue(params.priceFrom);
+	const priceTo     = await safelyGetValue(params.priceTo);
+	const sortBy      = await safelyGetValue(params.sortBy);
 
-	// Обрабатываем полученные значения
-	const ingredientsIdArr = ingredients
-		? ingredients.split(',').map(Number).filter(Boolean)
-		: undefined;
-
-	const pizzaTypesArr = pizzaTypes ? pizzaTypes.split(',').map(Number).filter(Boolean) : undefined;
-
-	const sizesArr = sizes ? sizes.split(',').map(Number).filter(Boolean) : undefined;
+	const ingredientsIdArr = ingredients?.split(',').map(Number).filter(Boolean);
+	const pizzaTypesArr    = pizzaTypes?.split(',').map(Number).filter(Boolean);
+	const sizesArr         = sizes?.split(',').map(Number).filter(Boolean);
 
 	const minPrice = Number(priceFrom) || DEFAULT_MIN_PRICE;
-	const maxPrice = Number(priceTo) || DEFAULT_MAX_PRICE;
+	const maxPrice = Number(priceTo)   || DEFAULT_MAX_PRICE;
 
-	const limitNum = Number(limit || DEFAULT_LIMIT);
-	const pageNum = Number(page || DEFAULT_PAGE);
-
-	// Построение запроса
+	// Фильтр продуктов
 	const where: Prisma.ProductWhereInput = {};
 
-	// Добавляем условия фильтрации только если есть соответствующие параметры
 	if (ingredientsIdArr && ingredientsIdArr.length > 0) {
-		where.ingredients = {
-			some: {
-				id: {
-					in: ingredientsIdArr,
-				},
-			},
-		};
+		where.ingredients = { some: { id: { in: ingredientsIdArr } } };
 	}
 
-	// Условия для items
 	const itemsWhere: Prisma.ProductItemWhereInput = {
-		price: {
-			gte: minPrice,
-			lte: maxPrice,
-		},
+		price: { gte: minPrice, lte: maxPrice },
 	};
+	if (sizesArr && sizesArr.length > 0)           itemsWhere.size      = { in: sizesArr };
+	if (pizzaTypesArr && pizzaTypesArr.length > 0) itemsWhere.pizzaType = { in: pizzaTypesArr };
 
-	if (sizesArr && sizesArr.length > 0) {
-		itemsWhere.size = {
-			in: sizesArr,
-		};
-	}
+	where.items = { some: itemsWhere };
 
-	if (pizzaTypesArr && pizzaTypesArr.length > 0) {
-		itemsWhere.pizzaType = {
-			in: pizzaTypesArr,
-		};
-	}
-
-	where.items = {
-		some: itemsWhere,
-	};
-
-	const result = await prisma.category.findMany({
-		skip: (pageNum - 1) * limitNum,
-		take: limitNum,
+	// Получаем все продукты глобально
+	const allProducts = await prisma.product.findMany({
+		where,
 		include: {
-			products: {
-				orderBy: {
-					id: 'desc',
-				},
-				where,
-				include: {
-					items: {
-						where: {
-							price: {
-								gte: minPrice,
-								lte: maxPrice,
-							},
-						},
-						orderBy: {
-							price: 'asc',
-						},
-					},
-					ingredients: true,
-				},
+			items: {
+				where: { price: { gte: minPrice, lte: maxPrice } },
+				orderBy: { price: 'asc' },
 			},
+			ingredients: true,
+			category: true,
 		},
 	});
 
-	const total = await prisma.category.count();
+	// Глобальная сортировка по всем продуктам
+	allProducts.sort((a, b) => {
+		const aPrice = a.items[0]?.price ?? 0;
+		const bPrice = b.items[0]?.price ?? 0;
+		switch (sortBy) {
+			case 'price_asc':  return aPrice - bPrice;
+			case 'price_desc': return bPrice - aPrice;
+			case 'new':        return b.id - a.id;
+			case 'popular':
+			default:           return a.id - b.id;
+		}
+	});
+
+	// Группируем по категориям, сохраняя глобальный порядок сортировки
+	const categories = await prisma.category.findMany({ orderBy: { id: 'asc' } });
+	const categoryById = new Map(categories.map(c => [c.id, { ...c, products: [] as typeof allProducts }]));
+
+	for (const product of allProducts) {
+		categoryById.get(product.categoryId)?.products.push(product);
+	}
+
+	const data = Array.from(categoryById.values()).filter(c => c.products.length > 0);
 
 	return {
-		data: result,
+		data,
 		meta: {
-			total,
-			page: pageNum,
-			limit: limitNum,
-			pageCount: Math.ceil(total / limitNum),
+			total: allProducts.length,
+			page: 1,
+			limit: allProducts.length,
+			pageCount: 1,
 		},
 	};
 };

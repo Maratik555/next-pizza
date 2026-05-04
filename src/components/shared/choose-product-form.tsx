@@ -43,16 +43,16 @@ export const ChooseProductForm = ({ name, items, imageUrl, onClickAdd, className
 	};
 
 	return (
-		<div className={cn(className, 'flex flex-1')}>
-			<div className='flex items-center justify-center flex-1 relative w-full'>
+		<div className={cn(className, 'flex flex-col lg:flex-row flex-1')}>
+			<div className='flex items-center justify-center flex-1 relative w-full p-4'>
 				<img
 					src={imageUrl}
 					alt={name}
-					className='relative left-2 top-2 transition-all z-10 duration-300 w-[300px] h-[300px]'
+					className='relative transition-all z-10 duration-300 w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] object-contain'
 				/>
 			</div>
 
-			<div className='w-[490px] bg-[#FCFCFC] p-7'>
+			<div className='w-full lg:w-[490px] bg-[#FCFCFC] p-4 sm:p-7'>
 				<Title
 					text={name}
 					size='md'
@@ -66,7 +66,7 @@ export const ChooseProductForm = ({ name, items, imageUrl, onClickAdd, className
 				<Button
 					loading={loading}
 					onClick={handleClickAdd}
-					className='h-[55px] px-10 text-base rounded-[18px] w-full mt-[350px]'>
+					className='h-[50px] sm:h-[55px] px-6 sm:px-10 text-sm sm:text-base rounded-[18px] w-full mt-4'>
 					Добавить в корзину за {productPrice} ₽
 				</Button>
 			</div>

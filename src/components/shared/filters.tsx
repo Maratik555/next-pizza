@@ -41,10 +41,11 @@ export const Filters = ({ className, initialParams }: Props) => {
 
 	return (
 		<div className={className}>
+			{/* Скрываем заголовок в drawer, так как он уже есть в SheetHeader */}
 			<Title
 				text='Фильтрация'
 				size='sm'
-				className='mb-5 font-bold'
+				className='mb-5 font-bold hidden lg:block'
 			/>
 
 			{/*/!* Верхние чекбоксы *!/*/}
@@ -76,7 +77,7 @@ export const Filters = ({ className, initialParams }: Props) => {
 
 			{/* Фильтр цен */}
 			<div className='mt-5 border-y border-y-neutral-100 py-6 pb-7'>
-				<p className='font-bold mb-3'>Цена от и до:</p>
+				<p className='font-bold mb-3 text-foreground'>Цена от и до:</p>
 				<div className='flex gap-3 mb-5'>
 					<Input
 						type='number'
@@ -90,6 +91,7 @@ export const Filters = ({ className, initialParams }: Props) => {
 								priceFrom: Number(e.target.value),
 							})
 						}
+						className="bg-white"
 					/>
 					<Input
 						type='number'
@@ -103,6 +105,7 @@ export const Filters = ({ className, initialParams }: Props) => {
 								priceTo: Number(e.target.value),
 							})
 						}
+						className="bg-white"
 					/>
 				</div>
 

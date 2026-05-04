@@ -60,23 +60,25 @@ export const ChoosePizzaForm = ({
 	};
 
 	return (
-		<div className={cn(className, 'flex flex-1')}>
-			<ProductImage imageUrl={imageUrl} size={size} />
+		<div className={cn(className, 'flex flex-col lg:flex-row flex-1')}>
+			<ProductImage imageUrl={imageUrl} size={size} className="flex-shrink-0 lg:flex-1 min-h-[180px] sm:min-h-[300px]" />
 
-			<div className="w-[490px] bg-[#FCFCFC] p-7">
-				<Title text={name} size="md" className="font-extrabold mb-1" />
+			<div className="w-full lg:w-[490px] bg-[#FCFCFC] p-2.5 sm:p-5 lg:p-7">
+				<Title text={name} size="md" className="font-extrabold mb-0.5 text-base sm:text-xl lg:text-2xl" />
 
-				<p className="text-gray-400">{textDetaills}</p>
+				<p className="text-gray-400 text-[10px] sm:text-xs lg:text-sm mb-2 sm:mb-3">{textDetaills}</p>
 
-				<PizzaSelector
-					pizzaSizes={availablePizzaSizes}
-					selectedSize={String(size)}
-					selectedPizzaType={String(type)}
-					onClickSize={setPizzaSize}
-					onClickPizzaType={setPizzaType}
-				/>
+				<div className="mb-2 sm:mb-4 lg:mb-5">
+					<PizzaSelector
+						pizzaSizes={availablePizzaSizes}
+						selectedSize={String(size)}
+						selectedPizzaType={String(type)}
+						onClickSize={setPizzaSize}
+						onClickPizzaType={setPizzaType}
+					/>
+				</div>
 
-				<div className="bg-gray-50 p-5 rounded-md h-[420px] overflow-auto scrollbar">
+				<div className="bg-gray-50 p-2 sm:p-3 lg:p-5 rounded-md h-[200px] sm:h-[280px] lg:h-[420px] overflow-auto mb-2 sm:mb-3 scrollbar-hide">
 					<IngredientsList
 						ingredients={ingredients}
 						onClickAdd={toggleAddIngredient}
@@ -86,7 +88,7 @@ export const ChoosePizzaForm = ({
 				<Button
 					loading={loading}
 					onClick={handleClickAdd}
-					className="h-[55px] px-10 text-base rounded-[18px] w-full">
+					className="h-[40px] sm:h-[48px] lg:h-[55px] px-4 sm:px-6 lg:px-10 text-xs sm:text-sm lg:text-base rounded-[18px] w-full">
 					Добавить в корзину за {totalPrice} ₽
 				</Button>
 			</div>

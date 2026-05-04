@@ -16,7 +16,7 @@ export const IngredientsList = ({
                                                      className,
                                                  }: Props) => {
     return (
-        <div className={cn('grid grid-cols-3 gap-3', className)}>
+        <div className={cn('grid grid-cols-3 gap-1.5 sm:gap-2 lg:gap-3', className)}>
             {ingredients.map((item) => (
                 <Ingredient
                     onClick={() => onClickAdd(item.id)}

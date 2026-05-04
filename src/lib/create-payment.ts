@@ -56,7 +56,7 @@ export async function createPayment(details: {
       },
       confirmation: {
         type: 'redirect',
-        return_url: 'https://next-pizza-rust.vercel.app/?paid'
+        return_url: 'https://next-pizza-marat.vercel.app/?paid'
       }
     },
     {

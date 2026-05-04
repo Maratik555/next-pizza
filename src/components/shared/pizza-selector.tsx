@@ -24,7 +24,7 @@ export const PizzaSelector = React.memo(function PizzaSelectorComponent({
 	className,
 }: Props) {
 	return (
-		<div className={cn('flex flex-col gap-3 mt-5 mb-8', className)}>
+		<div className={cn('flex flex-col gap-2 sm:gap-2.5 lg:gap-3', className)}>
 			<GroupVariants
 				defaultValue='20'
 				items={pizzaSizes}

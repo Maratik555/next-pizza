@@ -12,11 +12,12 @@ interface Props {
 
 export const TopBar = ({className, categories }: Props) => {
     return (
-        <div className={cn('sticky top-0 bg-white py-5 shadow-lg shadow-black/5 z-10', className)}>
-            <Container className="flex items-center justify-between ">
-                <Categories items={categories} />
-                <SortPopup />
-            </Container>
+        <div className={cn('sticky top-0 bg-white shadow-lg shadow-black/5 z-10', className)}>
+            {/* Категории — скролл на мобильных */}
+            <div className="mx-auto max-w-[1280px] px-4 pt-3 pb-2 md:py-5 flex items-center gap-2">
+                <Categories items={categories} className="min-w-0 flex-1" />
+                <SortPopup className="shrink-0" />
+            </div>
         </div>
     );
 };

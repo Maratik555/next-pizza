@@ -1,10 +1,8 @@
 import { Container } from '@/components/shared/container';
 import { Filters } from '@/components/shared/filters';
-
-import { Pagination } from '@/components/shared/pagination';
+import { FiltersDrawer } from '@/components/shared/filters-drawer';
 import { ProductsGroupList } from '@/components/shared/products-group-list';
 import { Stories } from '@/components/shared/stories';
-import { Title } from '@/components/shared/title';
 import { TopBar } from '@/components/shared/top-bar';
 import { GetSearchParams, findPizzas } from '@/lib/find-pizzas';
 import { CategoryProducts, ProductWithRelations } from '../../../@types/prisma';
@@ -14,7 +12,7 @@ async function safelyResolveParams(params: GetSearchParams): Promise<Record<stri
 	const resolved: Record<string, string> = {};
 
 	// Список ключей, которые мы ожидаем в searchParams
-	const keys = ['ingredients', 'pizzaTypes', 'sizes', 'priceFrom', 'priceTo', 'limit', 'page'];
+	const keys = ['ingredients', 'pizzaTypes', 'sizes', 'priceFrom', 'priceTo', 'limit', 'page', 'sortBy'];
 
 	// Резолвим каждый параметр
 	for (const key of keys) {
@@ -49,27 +47,22 @@ export default async function HomePage({
 
 	return (
 		<>
-			<Container className='mt-5'>
-				<Title
-					text='Все пиццы'
-					size='lg'
-					className='font-extrabold'
-				/>
-			</Container>
-
 			<TopBar
 				categories={categoryProducts.filter((c: CategoryProducts) => c.products.length > 0)}
 			/>
 
 			<Stories />
 
-			<Container className='pb-14 mt-10'>
-				<div className='flex gap-[70px]'>
-					<div className='w-[250px]'>
+			<Container className='pb-14 mt-5'>
+				<div className='mb-5 lg:hidden flex justify-center'>
+					<FiltersDrawer initialParams={resolvedParams} />
+				</div>
+				<div className='flex gap-5 lg:gap-10'>
+					<div className='hidden lg:block w-[250px] shrink-0'>
 						<Filters initialParams={resolvedParams} />
 					</div>
-					<div className='flex-1'>
-						<div className='flex flex-col gap-16'>
+					<div className='flex-1 lg:pl-4'>
+						<div className='flex flex-col gap-10'>
 							{categoryProducts.map(
 								(category: CategoryProducts) =>
 									category.products.length > 0 && (
@@ -83,12 +76,18 @@ export default async function HomePage({
 							)}
 						</div>
 
-						<div className='flex items-center gap-6 mt-12'>
-							<Pagination
-								pageCount={meta.pageCount}
-								currentPage={meta.page}
-							/>
-							<span className='text-sm text-gray-400'>5 из 65</span>
+						<div className='flex items-center justify-center w-full mt-10 pb-4'>
+							<div className='flex items-center gap-1'>
+								<button disabled className='w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-300 cursor-not-allowed'>
+									‹
+								</button>
+								<button className='w-10 h-10 flex items-center justify-center rounded-lg bg-primary text-white font-bold text-sm'>
+									1
+								</button>
+								<button disabled className='w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-300 cursor-not-allowed'>
+									›
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>

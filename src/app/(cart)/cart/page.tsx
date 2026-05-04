@@ -106,22 +106,21 @@ export default function CartPage() {
 
 			<FormProvider {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)}>
-					<div className='flex gap-10'>
-						<div className='flex flex-col gap-10 flex-1 mb-20'>
+					<div className='flex flex-col lg:flex-row gap-6 lg:gap-10'>
+						<div className='flex flex-col gap-6 lg:gap-10 flex-1 mb-10 lg:mb-20'>
 							<WhiteBlock
 								title='1. Корзина'
 								endAdornment={
 									totalAmount > 0 && (
-										<button className='flex items-center gap-3 text-gray-400 hover:text-gray-600'
+										<button className='flex items-center gap-2 sm:gap-3 text-sm sm:text-base text-gray-400 hover:text-gray-600'
 												onClick={() => removeItemsAll()}
 										>
 											<Trash2 size={18} />
-
-											Очистить корзину
+											<span className='hidden sm:inline'>Очистить корзину</span>
 										</button>
 									)
 								}>
-								<div className='flex flex-col gap-5'>
+								<div className='flex flex-col gap-4 sm:gap-5'>
 									{loading
 										? [...Array(3)].map((_, index) => <CartItemSkeleton key={index} />)
 										: items.map(item => (
@@ -145,8 +144,8 @@ export default function CartPage() {
 							<WhiteBlock
 								title='2. Персональная информация'
 								className={!totalAmount ? 'opacity-50 pointer-events-none' : ''}
-								contentClassName='p-8'>
-								<div className='grid grid-cols-2 gap-5'>
+								contentClassName='p-4 sm:p-8'>
+								<div className='grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5'>
 									<FormInput
 										name='firstName'
 										className='text-base'
@@ -173,8 +172,8 @@ export default function CartPage() {
 							<WhiteBlock
 								className={!totalAmount ? 'opacity-50 pointer-events-none' : ''}
 								title='3. Адрес доставки'
-								contentClassName='p-8'>
-								<div className='flex flex-col gap-5'>
+								contentClassName='p-4 sm:p-8'>
+								<div className='flex flex-col gap-4 sm:gap-5'>
 									<Controller
 										control={form.control}
 										name='address'
@@ -190,7 +189,7 @@ export default function CartPage() {
 								</div>
 							</WhiteBlock>
 						</div>
-						<div className='w-[450px]'>
+						<div className='w-full lg:w-[450px]'>
 							<CartSidebar
 								totalPrice={totalPrice}
 								totalAmount={totalAmount}

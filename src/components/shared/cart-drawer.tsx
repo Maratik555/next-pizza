@@ -30,7 +30,7 @@ export const CartDrawer = ({ children }: React.PropsWithChildren) => {
 		<Sheet>
 			{/* Using asChild to prevent button nesting issues */}
 			<SheetTrigger asChild>{children}</SheetTrigger>
-			<SheetContent className='flex flex-col justify-between pb-0 bg-[#F4F1EE]'>
+			<SheetContent className='flex flex-col justify-between pb-0 bg-[#F4F1EE] w-full sm:w-[450px] sm:max-w-[450px]'>
 				{/* Always include a SheetTitle for accessibility, even if visually hidden when cart is empty */}
 				<SheetHeader>
 					{totalAmount > 0 ? (
@@ -78,7 +78,7 @@ export const CartDrawer = ({ children }: React.PropsWithChildren) => {
 
 					{totalAmount > 0 && (
 						<>
-							<div className='-mx-6 mt-5 overflow-auto flex-1'>
+							<div className='-mx-6 mt-5 overflow-auto flex-1 scrollbar-hide'>
 								{items.map((item: ICartItem) => (
 									<div
 										key={item.id}
@@ -98,15 +98,15 @@ export const CartDrawer = ({ children }: React.PropsWithChildren) => {
 								))}
 							</div>
 
-							<SheetFooter className='-mx-6 bg-white p-8'>
+							<SheetFooter className='-mx-6 bg-white p-4 sm:p-8'>
 								<div className='w-full'>
-									<div className='flex mb-4'>
-										<span className='flex flex-1 text-lg text-neutral-500'>
+									<div className='flex mb-3 sm:mb-4'>
+										<span className='flex flex-1 text-base sm:text-lg text-neutral-500'>
 											Итого
 											<div className='flex-1 border-b border-dashed border-b-neutral-200 relative -top-1 mx-2' />
 										</span>
 
-										<span className='font-bold text-lg'>{totalAmount} ₽</span>
+										<span className='font-bold text-base sm:text-lg'>{totalAmount} ₽</span>
 									</div>
 
 									<Link href='/cart'>
@@ -114,9 +114,9 @@ export const CartDrawer = ({ children }: React.PropsWithChildren) => {
 											onClick={() => setRedirecting(true)}
 											loading={loading || redirecting}
 											type='submit'
-											className='w-full h-12 text-base'>
+											className='w-full h-11 sm:h-12 text-sm sm:text-base'>
 											Оформить заказ
-											<ArrowRight className='w-5 ml-2' />
+											<ArrowRight className='w-4 sm:w-5 ml-2' />
 										</Button>
 									</Link>
 								</div>

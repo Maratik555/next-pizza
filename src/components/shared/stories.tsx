@@ -17,8 +17,10 @@ export const Stories = ({ className }: Props) => {
 	const [stories, setStories] = React.useState<IStory[]>([]);
 	const [open, setOpen] = React.useState(false);
 	const [selectedStory, setSelectedStory] = React.useState<IStory>();
+	const [mounted, setMounted] = React.useState(false);
 
 	React.useEffect(() => {
+		setMounted(true);
 		async function fetchStories() {
 			const data = await Api.stories.getAll();
 			setStories(data);
@@ -26,6 +28,19 @@ export const Stories = ({ className }: Props) => {
 
 		fetchStories();
 	}, []);
+
+	if (!mounted) {
+		return (
+			<Container className={cn('flex items-center justify-between gap-2 my-10 overflow-x-auto', className)}>
+				{[...Array(6)].map((_, index) => (
+					<div
+						key={index}
+						className='w-[150px] sm:w-[200px] h-[200px] sm:h-[250px] bg-gray-200 rounded-md animate-pulse flex-shrink-0'
+					/>
+				))}
+			</Container>
+		);
+	}
 
 	const onClickStory = (story: IStory) => {
 		console.log('Clicked story:', story);
@@ -35,43 +50,40 @@ export const Stories = ({ className }: Props) => {
 
 	return (
 		<>
-			<Container className={cn('flex items-center justify-between gap-2 my-10', className)}>
+			<Container className={cn('flex items-center justify-between gap-2 my-10 overflow-x-auto', className)}>
 				{stories.length === 0 &&
 					[...Array(6)].map((_, index) => (
 						<div
 							key={index}
-							className='w-[200px] h-[250px] bg-gray-200 rounded-md animate-pulse'
+							className='w-[150px] sm:w-[200px] h-[200px] sm:h-[250px] bg-gray-200 rounded-md animate-pulse flex-shrink-0'
 						/>
 					))}
 				{stories.map(story => (
 					<img
 						key={story.id}
 						onClick={() => onClickStory(story)}
-						className='rounded-md cursor-pointer'
+						className='rounded-md cursor-pointer flex-shrink-0 w-[150px] sm:w-[200px] h-[200px] sm:h-[250px] object-cover'
 						alt='Story'
-						height={250}
-						width={200}
 						src={story.previewImageUrl}
 					/>
 				))}
 			</Container>
 			{open && (
-				<div className='absolute left-0 top-0 w-full h-full bg-black/80 flex items-center justify-center z-20'>
+				<div className='fixed left-0 top-0 w-full h-full bg-black/80 flex items-center justify-center z-20 p-4'>
 					<div
-						className='relative'
-						style={{ width: 520 }}>
+						className='relative w-full max-w-[520px]'>
 						<button
-							className='absolute -right-10 -top-5 z-30'
+							className='absolute -right-2 -top-12 sm:-right-10 sm:-top-5 z-30'
 							onClick={() => setOpen(false)}>
-							<X className='absolute top-0 right-0 w-8 h-8 text-white/50' />
+							<X className='w-8 h-8 text-white/50' />
 						</button>
 						{selectedStory && selectedStory.items && selectedStory.items.length > 0 ? (
 							<ReactStories
 								onAllStoriesEnd={() => setOpen(false)}
 								stories={selectedStory.items.map(item => ({ url: item.sourceUrl }))}
 								defaultInterval={5000}
-								width={520}
-								height={800}
+								width='100%'
+								height='auto'
 							/>
 						) : (
 							<div className='text-white '>Нет доступных элементов для этой истории.</div>

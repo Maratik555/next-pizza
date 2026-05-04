@@ -39,10 +39,10 @@ export const DrawerCartItem = ({
 	};
 
 	return (
-		<div className={cn('flex bg-white p-5 gap-6', className)}>
-			<CartItemDetailsImage src={imageUrl} />
+		<div className={cn('flex bg-white p-3 sm:p-5 gap-3 sm:gap-6', className)}>
+			<CartItemDetailsImage src={imageUrl} className="w-[60px] h-[60px] sm:w-[80px] sm:h-[80px]" />
 
-			<div className='flex-1'>
+			<div className='flex-1 min-w-0'>
 				<CartItemInfo
 					name={name}
 					ingredients={ingredients}
@@ -51,15 +51,16 @@ export const DrawerCartItem = ({
 					productItem={productItem}
 				/>
 
-				<hr className='my-3' />
+				<hr className='my-2 sm:my-3' />
 
 				<div className='flex items-center justify-between'>
 					<CountButton
 						onClick={onClickCountButton}
 						value={quantity}
+						size="sm"
 					/>
 
-					<div className='flex items-center gap-3'>
+					<div className='flex items-center gap-2 sm:gap-3'>
 						<CartItemDetailsPrice value={price} />
 						<Trash2Icon
 							onClick={() => removeCartItem(id)}

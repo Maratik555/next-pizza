@@ -11,6 +11,21 @@ interface Props {
 
 export const ProfileButton: React.FC<Props> = ({ className, onClickOpenModal }) => {
   const { data: session } = useSession();
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return (
+      <div className={className}>
+        <Button variant="outline" disabled>
+          Войти
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className={className}>

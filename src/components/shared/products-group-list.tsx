@@ -50,10 +50,10 @@ export const ProductsGroupList = ({
 			/>
 			<div
 				ref={intersectionRef}
-				className={cn('grid grid-cols-3 gap-[50px]', listClassName)}>
+				className={cn('grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6', listClassName)}>
 				{items
 					.filter(product => product.items.length > 0)
-					.map(product => (
+					.map((product, index) => (
 						<ProductCard
 							key={product.id}
 							id={product.id}
@@ -62,6 +62,7 @@ export const ProductsGroupList = ({
 							price={product.items[0].price}
 							ingredients={product.ingredients}
 							productItemId={product.items[0].id}
+							index={index}
 						/>
 					))}
 			</div>

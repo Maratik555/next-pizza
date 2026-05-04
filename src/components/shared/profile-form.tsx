@@ -25,8 +25,8 @@ export const ProfileForm = ({ data } : Props) => {
   const form = useForm({
     resolver: zodResolver(formRegisterSchema),
     defaultValues: {
-      fullName: data.fullName,
-      email: data.email,
+      fullName: data.fullName || '',
+      email: data.email || '',
       password: '',
       confirmPassword: '',
     },
