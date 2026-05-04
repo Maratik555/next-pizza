@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { ArrowUpDown, ChevronDown } from "lucide-react";
-import React from "react";
+import React, { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 const SORT_OPTIONS = [
@@ -16,7 +16,7 @@ interface Props {
     className?: string;
 }
 
-export const SortPopup = ({ className }: Props) => {
+const SortPopupInner = ({ className }: Props) => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [open, setOpen] = React.useState(false);
@@ -74,5 +74,18 @@ export const SortPopup = ({ className }: Props) => {
                 </div>
             )}
         </div>
+    );
+};
+
+export const SortPopup = ({ className }: Props) => {
+    return (
+        <Suspense fallback={
+            <div className={cn('inline-flex items-center gap-1 bg-gray-50 px-2.5 md:px-5 h-11 rounded-2xl text-xs md:text-base', className)}>
+                <ArrowUpDown size={13} className="shrink-0" />
+                <b className="text-primary">Популярное</b>
+            </div>
+        }>
+            <SortPopupInner className={className} />
+        </Suspense>
     );
 };
